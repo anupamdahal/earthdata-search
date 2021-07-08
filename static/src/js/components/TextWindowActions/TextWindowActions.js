@@ -1,9 +1,15 @@
 
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
-import { FaCopy, FaSave, FaExpand } from 'react-icons/fa'
+import {
+  FaCopy,
+  FaSave,
+  FaExpand,
+  FaDownload
+} from 'react-icons/fa'
 
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
+import { downloadAll } from '../../util/download/downloads'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 
@@ -27,6 +33,7 @@ export const TextWindowActions = ({
   clipboardContents,
   disableCopy,
   disableSave,
+  downloadLinks,
   fileContents,
   fileName,
   id,
@@ -56,6 +63,17 @@ export const TextWindowActions = ({
   return (
     <div className="text-window-actions">
       <header className="text-window-actions__actions">
+        <Button
+          className="text-window-actions__action text-window-actions__action--download"
+          bootstrapSize="sm"
+          icon={FaDownload}
+          onClick={() => {
+            downloadAll([...downloadLinks])
+          }}
+          label="Download"
+        >
+          Download
+        </Button>
         {
           (!disableCopy && supportsClipboard) && (
             <Button
@@ -182,6 +200,7 @@ TextWindowActions.defaultProps = {
   children: null,
   disableCopy: false,
   disableSave: false,
+  downloadLinks: [],
   clipboardContents: '',
   fileContents: null,
   fileName: null,
@@ -194,6 +213,7 @@ TextWindowActions.propTypes = {
   clipboardContents: PropTypes.string,
   disableCopy: PropTypes.bool,
   disableSave: PropTypes.bool,
+  downloadLinks: PropTypes.arrayOf(PropTypes.string),
   fileContents: PropTypes.string,
   fileName: PropTypes.string,
   id: PropTypes.string,

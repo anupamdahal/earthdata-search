@@ -45,6 +45,7 @@ export const DownloadFilesPanel = ({
         modalTitle="Download Files"
         disableCopy={!showTextWindowActions}
         disableSave={!showTextWindowActions}
+        downloadLinks={[...downloadLinks]}
       >
         <ul className="download-links-panel__list">
           {
